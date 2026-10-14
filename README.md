@@ -21,20 +21,34 @@ mediaio auth login
 ### Codex
 
 ```bash
-npx skills add https://github.com/media-io/plugin-cli --agent codex
+codex plugin marketplace add media-io/plugin-cli
+codex plugin add media-io-cli@wondershare-media-io-cli
 ```
+
+The CLI marketplace is **Wondershare Media.io CLI** (`wondershare-media-io-cli`).
+The separate MCP marketplace is `wondershare-media-io`, with plugin `media-io`.
+The two packages can coexist without sharing a marketplace registration.
+If Git marketplace installation is unavailable, use the CLI setup script's personal marketplace fallback.
+
+After installation, `mediaio upgrade codex` updates the CLI binary and this CLI
+plugin, not the MCP plugin. Reinstall this CLI plugin when migrating an old
+installation named `media-io`; do not remove that identity blindly because it
+now belongs to MCP.
 
 ### Cursor
 
 Install the shared Media.io skill package for Cursor:
 
 ```bash
-npx skills add https://github.com/media-io/plugin-cli --agent cursor
+npx skills add media-io/skills -g --agent cursor
 ```
 
 ### Claude Code
 
 Install this repository as a plugin and point the host at `.claude-plugin/`.
+
+The Claude marketplace is also `wondershare-media-io-cli`. The CLI setup script
+uses direct `media-io/skills` installation for Claude Code instead.
 
 For an internal source checkout, use `plugin-cli-main/` as the plugin root.
 
@@ -50,7 +64,9 @@ already on your `PATH`.
 
 | Path | Purpose |
 |---|---|
+| `.agents/plugins/marketplace.json` | Codex marketplace, `wondershare-media-io-cli` |
 | `.codex-plugin/plugin.json` | Codex manifest |
+| `.claude-plugin/marketplace.json` | Claude marketplace, `wondershare-media-io-cli` |
 | `.claude-plugin/plugin.json` | Claude Code manifest |
 | `skills/` | Shared skill package for Codex, Claude Code, and Cursor |
 
