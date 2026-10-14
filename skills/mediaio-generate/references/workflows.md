@@ -1,0 +1,76 @@
+# Workflow Generation
+
+Use only workflows exposed by the currently installed BIN. Workflow identifiers and schemas are dynamic; historical names in planning documents are not executable unless they appear in live discovery.
+
+## Discover
+
+```bash
+mediaio workflow list
+mediaio workflow get <workflow_name>
+```
+
+Take the exact identifier from the first column of `workflow list`. `workflow get` prints the accepted parameters, defaults, allowed values, media fields, and raw credit configuration. These commands produce their documented human-readable output and have no optional JSON mode.
+
+## Prepare media
+
+Generation parameters accept uploaded file IDs, not local paths. Upload every local input first:
+
+```bash
+mediaio upload create ./source.mp4
+mediaio upload create ./reference.png
+```
+
+Save each returned `file_id`, then map it to the exact parameter name shown by `workflow get`.
+
+## Submit
+
+Workflows use the same create command as models, and `--yes` is required on every submission:
+
+```bash
+mediaio generate create <workflow_name> [--param value]... --yes
+```
+
+The create response prints a `task_id=<id>` line. Wait separately:
+
+```bash
+mediaio generate wait <task_id> --timeout 20m --interval 3s
+```
+
+Retrieve the result file with the CLI instead of copying its signed URL:
+
+```bash
+mediaio generate download <task_id> --output-dir "$tmp_dir"
+```
+
+To query a known task directly when both values are available:
+
+```bash
+mediaio generate query <workflow_name> <task_id>
+```
+
+## Cost information
+
+`generate create` says nothing about cost by default. Add `--show-credit` when the user is cost-sensitive or has asked about credits, and report the number it prints with the result. Run `mediaio generate estimate <workflow_name> [--param value]...` instead when they want a say before spending: it submits nothing, and returns the credit cost, whether this request is free, and the account balance.
+
+The cost is computed server-side for the signed-in account, so `estimate: 0 credit(s)` / `free: yes` is authoritative — this request costs nothing. There is no "free quota" or partial-free state: it is either free or charged. `free: no - this model is free for members` means a membership would make it free; report that as an option, do not switch models on your own.
+
+A charge is only kept for a job that succeeds. The server refunds the credits for any job that ends in a failing terminal state, so a failure never costs the user anything — say so when you report one.
+
+`mediaio workflow get <workflow_name>` still prints the raw credit configuration for diagnostics.
+
+## Historical inventory
+
+`draw_to_video` and `reframe` were documented by the migrated reference set, but they are not current commands unless live `workflow list` returns those exact identifiers. Preserve their product requirements as planning input only:
+
+- Draw-to-video: source video, edited frame, timestamp, and edit instruction.
+- Reframe: source video, target aspect ratio, optional resolution, and optional reference media.
+
+## Maintainer rule
+
+For every documented workflow:
+
+1. Confirm its exact identifier in live `mediaio workflow list`.
+2. Confirm its complete schema with `mediaio workflow get <workflow_name>`.
+3. Build examples only with `mediaio generate create --yes`, then `mediaio generate wait`.
+4. Keep result lookup on `mediaio generate query <workflow_name> <task_id>` and result retrieval on `mediaio generate download <task_id>`.
+5. Document cost only from `mediaio generate estimate` output returned by the live BIN.

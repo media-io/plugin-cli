@@ -1,0 +1,44 @@
+{
+  "name": "media-io-cli",
+  "version": "0.5.0",
+  "description": "Media.io CLI plugin for agent-driven video and image creation workflows.",
+  "author": {
+    "name": "Media.io",
+    "email": "mi_dev@300624.cn",
+    "url": "https://www.media.io"
+  },
+  "homepage": "https://www.media.io/ai/home",
+  "license": "MIT",
+  "keywords": [
+    "media.io",
+    "video",
+    "video-editing",
+    "editor",
+    "captions",
+    "subtitles",
+    "transcription",
+    "timeline",
+    "codex",
+    "mcp"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Media.io CLI",
+    "shortDescription": "Edit and create videos or images in Media.io from agent-driven",
+    "longDescription": "Workflow skills for routing video editing and creation work to the Media.io web: importing local or attached media, creating editable projects, editing timelines, adding captions/subtitles, generating AI media assets, exporting, and verifying editor-visible changes.",
+    "developerName": "Media.io",
+    "category": "Design",
+    "capabilities": ["Read", "Write"],
+    "websiteURL": "https://www.media.io/ai/home",
+    "privacyPolicyURL": "https://www.media.io/privacy.html",
+    "termsOfServiceURL": "https://www.media.io/terms-of-service.html",
+    "defaultPrompt": [
+      "Create images in Media.io",
+      "Add captions or subtitles to this video",
+      "Add a simple overlay or transition"
+    ],
+    "brandColor": "#111827",
+    "composerIcon": "./assets/logo-light.svg",
+    "logo": "./assets/logo-light.svg"
+  }
+}
