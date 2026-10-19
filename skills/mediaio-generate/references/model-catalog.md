@@ -4,11 +4,11 @@
 
 | Field | Value |
 | --- | --- |
-| generated_at | 2026-09-22T02:41:16.857Z |
+| generated_at | 2026-10-15T12:18:36.435Z |
 | environment | prod |
 | vapi | https://vapi.media.io |
-| model_count | 115 |
-| snapshot_digest | 290dbb71acf797e9 |
+| model_count | 119 |
+| snapshot_digest | 7848a5ebfb70dda7 |
 | catalog_schema_version | 1 |
 
 ## 0. How to use this file
@@ -119,9 +119,9 @@ Before falling back, confirm the target is still online under the rules in secti
 
 ## 5. Full index
 
-This snapshot contains 115 generation models. This section only answers whether a model exists and what it is called; it is not a selection guide.
+This snapshot contains 119 generation models. This section only answers whether a model exists and what it is called; it is not a selection guide.
 
-### text2image — text to image (14)
+### text2image — text to image (16)
 
 | job_type | Display name | Description |
 | --- | --- | --- |
@@ -131,16 +131,18 @@ This snapshot contains 115 generation models. This section only answers whether 
 | `text2image_gpt_image_2.5` | GPT Image 2.5 Flare | Stunning everyday images, fast. |
 | `text2image_gpt_image_2.5_sunburst` | GPT Image 2.5 Sunburst | Exceptional quality, precise edits. |
 | `text2image_nano_banana_2` | Nano Banana 2 | Faster generation, great value, and enhanced creative visual features. |
+| `text2image_nano_banana_2_1` | Nano Banana 2.1 | Balancing price and performance for image generation and editing. |
 | `text2image_nano_banana_2_lite` | Nano Banana 2 Lite | Fastest, most cost-efficient Gemini Image model. |
 | `text2image_seedream_4.0` | Seedream 4.0 | Create images with vivid realism. |
 | `text2image_seedream_5.0_lite` | Seedream 5.0 Lite | More accurate instructions, more intelligent outputs. |
 | `text2image_seedream_5.0_pro` | Seedream 5.0 Pro | A multimodal image generation model that features advanced reasoning, efficient content creation, and professional production capabilities. |
 | `text2image_soul_character` | ToMoviee Lite | Create hyper-realistic characters with unmatched precision and control. |
 | `text2image_tomoviee_2.0` | ToMoviee 2.0 | High-res imagery with fast, precise generation. |
+| `text2image_tomoviee_4.0` | ToMoviee Image 4.0 | Any Character. Any Scene. Endless Possibilities. |
 | `text2image_wan_2.7` | Wan 2.7 | A streamlined AI model that uses Chain-of-Thought reasoning to efficiently generate high-quality images. |
 | `text2image_wan_2.7_pro` | Wan 2.7 Pro | An advanced AI model that utilizes Chain-of-Thought reasoning to generate highly precise, professional-grade images. |
 
-### image2image — image to image (15)
+### image2image — image to image (17)
 
 | job_type | Display name | Description |
 | --- | --- | --- |
@@ -153,10 +155,12 @@ This snapshot contains 115 generation models. This section only answers whether 
 | `image2image_media_2.0` | ToMoviee Pro (ex-Media 2.0) | Pro-grade character consistency, precise clothing control, and semantic accuracy. |
 | `image2image_media_3.0` | ToMoviee 3.0 Pro | The ultimate model for character consistency and character editing. |
 | `image2image_nano_banana_2` | Nano Banana 2 | Faster generation, great value, and enhanced creative visual features. |
+| `image2image_nano_banana_2_1` | Nano Banana 2.1 | Balancing price and performance for image generation and editing. |
 | `image2image_nano_banana_2_lite` | Nano Banana 2 Lite | Fastest, most cost-efficient Gemini Image model. |
 | `image2image_seedream_4.0` | Seedream 4.0 | Create images with vivid realism. |
 | `image2image_seedream_5.0_lite` | Seedream 5.0 Lite | More accurate instructions, more intelligent outputs. |
 | `image2image_seedream_5.0_pro` | Seedream 5.0 Pro | A multimodal image generation model that features advanced reasoning, efficient content creation, and professional production capabilities. |
+| `image2image_tomoviee_4.0` | ToMoviee Image 4.0 | Any Character. Any Scene. Endless Possibilities. |
 | `image2image_wan_2.7` | Wan 2.7 | A streamlined AI model that uses Chain-of-Thought reasoning to efficiently generate high-quality images. |
 | `image2image_wan_2.7_pro` | Wan 2.7 Pro | An advanced AI model that utilizes Chain-of-Thought reasoning to generate highly precise, professional-grade images. |
 
@@ -300,7 +304,7 @@ Never infer a model's module from its job_type prefix. Use this table.
 | `image2video_wan_3.0_reference_image` | reference2video |
 | `text2image_gemini_omni_flash` | text2video |
 
-### 6.3 Duplicate display names (40 groups)
+### 6.3 Duplicate display names (42 groups)
 
 **A display name is not a primary key.** When the user names one of these, list the candidates and let them choose instead of silently taking the first.
 
@@ -327,6 +331,7 @@ Never infer a model's module from its job_type prefix. Use this table.
 | Nano Banana | `image2image_banana`<br>`text2image_banana` |
 | Nano Banana 2 | `image2image_nano_banana_2`<br>`text2image_nano_banana_2` |
 | Nano Banana 2 Lite | `image2image_nano_banana_2_lite`<br>`text2image_nano_banana_2_lite` |
+| Nano Banana 2.1 | `image2image_nano_banana_2_1`<br>`text2image_nano_banana_2_1` |
 | Nano Banana Pro | `image2image_banana_2`<br>`text2image_banana_2` |
 | Seedance 2.0 | `image2video_tomoviee_2.5`<br>`image2video_tomoviee_2.5_head_and_tail`<br>`image2video_tomoviee_2.5_reference_image`<br>`text2video_tomoviee_2.5` |
 | Seedance 2.0 Fast | `image2video_seedance2.0_fast`<br>`image2video_seedance2.0_fast_head_and_tail`<br>`image2video_seedance2.0_fast_reference_image`<br>`text2video_seedance2.0_fast` |
@@ -337,6 +342,7 @@ Never infer a model's module from its job_type prefix. Use this table.
 | Seedream 5.0 Pro | `image2image_seedream_5.0_pro`<br>`text2image_seedream_5.0_pro` |
 | ToMoviee 2.0 | `image2video_tomoviee_2.0`<br>`text2image_tomoviee_2.0`<br>`text2video_tomoviee_2.0` |
 | ToMoviee 4.0 | `image2video_tomoviee4_head_and_tail_switch`<br>`image2video_tomoviee4_switch`<br>`image2video_tomoviee4_reference_image_switch`<br>`text2video_tomoviee4_switch` |
+| ToMoviee Image 4.0 | `image2image_tomoviee_4.0`<br>`text2image_tomoviee_4.0` |
 | ToMoviee Lite | `image2image_media_1.0`<br>`text2image_soul_character` |
 | Vidu 2.0 | `image2video_vidu_2.0`<br>`image2video_vidu_2.0_head_and_tail`<br>`image2video_vidu_2.0_reference_image` |
 | Vidu Q1 | `image2video_vidu_q1`<br>`image2video_vidu_q1_head_and_tail` |
@@ -367,6 +373,7 @@ ToMoviee is our own model family. Its Chinese brand name is **天幕**. No displ
 | `image2image_media_1.0` | ToMoviee Lite | image2image |
 | `image2image_media_2.0` | ToMoviee Pro (ex-Media 2.0) | image2image |
 | `image2image_media_3.0` | ToMoviee 3.0 Pro | image2image |
+| `image2image_tomoviee_4.0` | ToMoviee Image 4.0 | image2image |
 | `image2video_media_1.0` | ToMoviee 2.0 Pro (ex-Media 1.0) | image2video |
 | `image2video_tomoviee4_head_and_tail_switch` | ToMoviee 4.0 | image2video |
 | `image2video_tomoviee4_switch` | ToMoviee 4.0 | image2video |
@@ -376,6 +383,7 @@ ToMoviee is our own model family. Its Chinese brand name is **天幕**. No displ
 | `image2video_tomoviee4_reference_image_switch` | ToMoviee 4.0 | reference2video |
 | `text2image_soul_character` | ToMoviee Lite | text2image |
 | `text2image_tomoviee_2.0` | ToMoviee 2.0 | text2image |
+| `text2image_tomoviee_4.0` | ToMoviee Image 4.0 | text2image |
 | `text2video_tomoviee4_switch` | ToMoviee 4.0 | text2video |
 | `text2video_tomoviee_2.0` | ToMoviee 2.0 | text2video |
 
@@ -399,4 +407,4 @@ mediaio model get "image2video_seedance _2.5"
 
 ---
 
-<!-- snapshot_digest: 290dbb71acf797e9 -->
+<!-- snapshot_digest: 7848a5ebfb70dda7 -->
