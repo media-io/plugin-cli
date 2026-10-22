@@ -23,7 +23,7 @@
   ],
   "skills": "./skills/",
   "interface": {
-    "displayName": "Media.io CLI",
+    "displayName": "Wandershare Media.io CLI",
     "shortDescription": "Edit and create videos or images in Media.io from agent-driven",
     "longDescription": "Workflow skills for routing video editing and creation work to the Media.io web: importing local or attached media, creating editable projects, editing timelines, adding captions/subtitles, generating AI media assets, exporting, and verifying editor-visible changes.",
     "developerName": "Media.io",
