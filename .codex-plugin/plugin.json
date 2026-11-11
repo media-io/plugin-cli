@@ -1,6 +1,6 @@
 {
   "name": "media-io-cli",
-  "version": "0.9.2",
+  "version": "1.0.1",
   "description": "Media.io CLI plugin for agent-driven video and image creation workflows.",
   "author": {
     "name": "Media.io",

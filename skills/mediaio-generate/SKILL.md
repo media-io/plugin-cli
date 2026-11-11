@@ -1,7 +1,7 @@
 ---
 name: mediaio-generate
 metadata:
-  version: "0.9.2"
+  version: "1.0.1"
 description: |
   Generate images and videos through the currently installed Media.io CLI.
   Use for text-to-image, image-to-image, text-to-video, image-to-video,
