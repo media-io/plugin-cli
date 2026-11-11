@@ -2,7 +2,7 @@
   "schema_version": 1,
   "source_repository": "media-plugin-main",
   "source_directory": "plugin-cli-main",
-  "source_commit": "b5a7fe98c77cd615ccfb5d064ff55e83caf47d07",
+  "source_commit": "4bbbd21f9b9c2463aa3c90c80c8227d602df68c4",
   "managed_paths": [
     ".agents",
     ".claude-plugin",
