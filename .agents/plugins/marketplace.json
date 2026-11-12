@@ -1,7 +1,7 @@
 {
   "name": "wondershare-media-io-cli",
   "interface": {
-    "displayName": "Wondershare Media.io CLI"
+    "displayName": "Media.io CLI"
   },
   "plugins": [
     {

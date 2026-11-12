@@ -25,7 +25,7 @@ codex plugin marketplace add media-io/plugin-cli
 codex plugin add media-io-cli@wondershare-media-io-cli
 ```
 
-The CLI marketplace is **Wondershare Media.io CLI** (`wondershare-media-io-cli`).
+The CLI marketplace is **Media.io CLI** (`wondershare-media-io-cli`).
 The separate MCP marketplace is `wondershare-media-io`, with plugin `media-io`.
 The two packages can coexist without sharing a marketplace registration.
 If Git marketplace installation is unavailable, use the CLI setup script's personal marketplace fallback.
