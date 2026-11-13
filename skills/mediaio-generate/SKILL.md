@@ -246,7 +246,16 @@ These are **not** reasons to call `model list`: routine intent routing, picking 
 
 Workflows and effects are separate discovery views not covered by the static catalog, but they are submitted through the same command: `mediaio generate create <job_type> ...`. Use `mediaio workflow list` / `mediaio effect list` for them. The current CLI has no `effect get`; never guess effect parameters from the list summary.
 
-`mediaio model get <job_type>` marks parameters as `[workflow-default]` when the workflow supplies a value if the flag is omitted.
+### Parameter constraints
+
+`model get` and `workflow get` support `--output text|json`. JSON parameters are under `data.params`; use the exact `name` as the CLI flag. Read these constraints before preparing a request:
+
+- Interpret `required` only when `required_known=true`: true means required, false means explicitly optional. `required_known=false`, a missing `required_known` in an older BIN, or text `required: unknown` means unknown.
+- Use `allowed` and `constraints.minimum/maximum/step`, `min_length/max_length`, `min_items/max_items`, and `media` only when supplied. Omitted constraints are unknown. A positive `min_items` describes the count when media is supplied; it does not establish that the flag is required.
+- `constraints.sources` identifies the AIGC template or UI metadata. Inspect its `metadata` and any `notes` for mapping, backfill, or conditional options before choosing values. Conditional metadata is not an unconditional enum; use only a combination established by current upstream evidence. Ask for a missing user choice only when it affects the request.
+- The printed `default` remains the AIGC default used by the CLI. A UI `default` inside `sources` is separate metadata. `[workflow-default]` / `workflow_default` reflects upstream `invisible`; it does not prove that source media may be omitted.
+
+For source roles, counts, and unknown requirements, load `references/media-inputs.md` when the schema exposes media parameters. Load `references/troubleshooting.md` when upstream constraints are absent or cannot establish the requested combination.
 
 ## Workflow — generic generation
 
@@ -267,9 +276,11 @@ Workflows and effects are separate discovery views not covered by the static cat
 
    For an effect, stop if its required parameters have not already been verified from current BIN/service evidence; `effect list` alone is not a parameter schema.
 
+   Finish inspection by checking the parameter constraints above, preserving the AIGC defaults and identifying any source media the request needs.
+
 3. **Prepare local media and check file access.** The current generator does not auto-upload local paths. Before reading or uploading each user-provided path:
 
-   - **Confirm the job actually needs source media, then confirm the user supplied it.** Job types named like `image2image_*`, `image2video_*`, `img2vid_*`, `*_i2i`, `*_i2v`, or `reference2video_*`, and any job whose `model get`/`workflow get` output lists an image/video/reference parameter, need at least one uploaded source file — even when the live schema does not mark that parameter `required`. If the user has not attached or referenced a local file or an existing `file_id` for such a job type, stop before `generate create` and ask the user to provide the source image/video first. Do not submit the job and then rely on the server's error to tell you a source was missing; see `references/troubleshooting.md` for the failure signature.
+   - **Establish source requirements from the schema and the requested operation.** Obtain each known required source, including both roles for a first-and-last-frame request. A known optional media parameter is included when the user supplies it or the requested operation needs it; its presence alone does not require a follow-up question. For unknown requirements, retain the source check for job types named like `image2image_*`, `image2video_*`, `img2vid_*`, `*_i2i`, `*_i2v`, or `reference2video_*`, and for source-based operations whose schema lists image/video/reference inputs. Obtain the needed local file or existing `file_id` before `generate create`; see `references/media-inputs.md` and `references/troubleshooting.md` for the missing-source failure signature.
    - Resolve relative paths against the current working directory without following an untrusted path blindly, and determine whether the resolved file is inside the active workspace.
    - For a path inside the workspace, continue with the normal host file-read rules.
    - For a path outside the workspace, pause and request the host's native file-read authorization for the exact file (or the smallest explicit set of files). State the paths and that they will be uploaded to Media.io. Do not launch `mediaio upload create` until that authorization is accepted.

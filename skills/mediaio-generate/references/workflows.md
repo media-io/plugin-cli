@@ -9,7 +9,9 @@ mediaio workflow list
 mediaio workflow get <workflow_name>
 ```
 
-Take the exact identifier from the first column of `workflow list`. `workflow get` prints the accepted parameters, defaults, allowed values, media fields, and raw credit configuration. These commands produce their documented human-readable output and have no optional JSON mode.
+Take the exact identifier from the first column of `workflow list`. Both commands accept `--output text|json`; text is the default. `workflow get` prints accepted parameters, AIGC defaults, available upstream constraints and their sources, plus raw credit configuration. JSON places parameters under `data.params`.
+
+Apply SKILL.md's "Parameter constraints" rules before submission: distinguish known requirements from unknown ones, inspect mapping/backfill and conditional options in `constraints.sources`, and preserve the printed AIGC defaults. UI defaults are separate source metadata. `[workflow-default]` does not establish that source media may be omitted. Follow `references/media-inputs.md` when the workflow exposes media inputs.
 
 ## Prepare media
 
@@ -70,7 +72,7 @@ A charge is only kept for a job that succeeds. The server refunds the credits fo
 For every documented workflow:
 
 1. Confirm its exact identifier in live `mediaio workflow list`.
-2. Confirm its complete schema with `mediaio workflow get <workflow_name>`.
+2. Confirm accepted parameters and available upstream constraints with `mediaio workflow get <workflow_name>` or its `--output json` mode; record any unknown or conditional limits instead of claiming a complete schema.
 3. Build examples only with `mediaio generate create --yes`, then `mediaio generate wait`.
 4. Keep result lookup on `mediaio generate query <workflow_name> <task_id>` and result retrieval on `mediaio generate download <task_id>`.
 5. Document cost only from `mediaio generate estimate` output returned by the live BIN.

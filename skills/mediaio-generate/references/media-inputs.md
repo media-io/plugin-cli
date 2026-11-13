@@ -16,14 +16,18 @@ mediaio workflow list
 mediaio workflow get <workflow_name>
 ```
 
-The detail output identifies the exact parameter names, whether each one is required or repeated, defaults, and allowed values. Use the spelling printed by the BIN; do not infer a media role from a product name.
+The detail output identifies exact parameter names, defaults, repetition, and available upstream constraints. Both detail commands accept `--output json`. Apply SKILL.md's "Parameter constraints" rules for known, unknown, and conditional requirements. Use the spelling printed by the BIN; map CLI inputs from AIGC parameters rather than copying MCP `request.inputs.*` names.
+
+For media, inspect `constraints.min_items/max_items` and `constraints.media` for supplied file formats, dimensions, aspect ratio, and file size. Keep the source units and conditional rules from `constraints.sources`; an absent bound is unknown. `repeated=true` permits repeated flags but does not promise an unlimited count. `[workflow-default]` does not establish that media may be omitted.
 
 ## Confirm source media before submitting
 
-Some job types functionally need a source image/video even when the live schema does not mark that parameter `required` — the server still fails the task after accepting it. Treat a job type as needing source media when either is true:
+First apply the known requirement markers: obtain known required media, and include known optional media only when supplied or needed for the requested operation. A text-to-image request with a known optional reference does not need a source-file question solely because that parameter exists. For a first-and-last-frame request, establish both roles from the selected schema and its conditions.
+
+Some job types functionally need a source image/video when the live schema leaves its requirement unknown — the server can fail the task after accepting it. For unknown requirements, keep the source-media check when either is true:
 
 - Its name matches a pattern like `image2image_*`, `image2video_*`, `img2vid_*`, `*_i2i`, `*_i2v`, or `reference2video_*`.
-- `model get`/`workflow get` lists an image/video/reference parameter in its schema, regardless of whether it is flagged required.
+- The requested operation uses source media and `model get`/`workflow get` lists an image/video/reference parameter in its schema.
 
 Before uploading anything or calling `generate create` for such a job type, confirm the user has already attached a local file or given an existing `file_id`. If not, stop and ask for the source image/video — do not submit and wait for the server to reject it. A missing source for these models typically surfaces as a generic terminal failure after submission succeeds (e.g. `status=4`, a numeric `reason_code` such as `680100`, a non-specific system-error message), not as a clear `missing required parameter` error.
 
@@ -86,7 +90,7 @@ The same flow applies to the GPT Image 2.5 variants — `image2image_gpt_image_2
 
 ## Repeated inputs
 
-Repeat a parameter only when the live schema marks it as repeated. For example, the verified GPT Image 2 image-to-image schema accepts repeated `--images` values:
+Repeat a parameter only when the live schema marks it as repeated, and keep the count within the exposed unconditional bounds. When counts or media roles depend on UI mapping/backfill, inspect the source metadata before assembling inputs. For example, the verified GPT Image 2 image-to-image schema accepts repeated `--images` values:
 
 ```bash
 mediaio generate create image2image_gpt_image_2 \

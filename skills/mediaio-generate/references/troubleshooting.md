@@ -57,10 +57,20 @@ Signed Media.io result URLs are hosted on the shared drive storage and carry an 
 
 ## Output modes
 
+### Missing or conditional parameter constraints
+
+Read SKILL.md's "Parameter constraints" rules, then inspect `mediaio model get <job_type> --output json` or `mediaio workflow get <workflow_name> --output json`.
+
+- `required_known=false`, a missing `required_known` in an older BIN, or text `required: unknown` is unknown requirement information. Check the source-media rules before submitting; `[workflow-default]` does not make an input optional.
+- Missing `allowed` or range/count fields means upstream has not supplied a usable unconditional constraint. In particular, AIGC numeric `min=0,max=0,step=0` placeholders do not mean "only zero is allowed". Preserve the printed AIGC default when the user has not requested another value.
+- Mapping/backfill or conditional options remain in `constraints.sources[].metadata`, with explanatory `notes`. Establish the selected combination from current upstream evidence before submission; do not copy MCP parameter names or historical defaults into CLI flags. If evidence cannot establish a requested non-default combination, explain what is unknown and obtain the missing choice or evidence.
+- Metadata refresh requires the BIN containing this contract. Existing version-10 registry caches are refreshed by the new BIN; upgrading an older BIN still follows SKILL.md's upgrade confirmation rules. An absent upstream field stays unknown after refresh.
+
 SKILL.md already states the rule: pass no `--output`, read the default `brief`. The rest of this section only matters when a script needs the machine contract or when the installed build is out of date.
 
 - `--output json` prints exactly one JSON document on stdout, starting with `"schema_version": 1` and `"command": "generate.<sub>"`; failures use the same shape with `"error": {"kind", "message"}` and leave the exit code unchanged. Credit estimates, confirmation prompts and `generate wait` progress lines all go to stderr, so the document stays pipeable into `jq`. Discovery and other non-`generate` commands (`model list`, `model get`, `workflow list`, `workflow get`, `effect list`, `account status`, `account transactions`, `upload create`, `upload list`, `whoami`, `config get`) also accept `--output json`, but use a simpler shared envelope (same `schema_version`/`command`/`error` shape, without the richer `generate`-specific fields like `task`/`estimate`/`paginate`).
-- `--output full` prints the raw API payload. Its escaped JSON (`\u0026` for `&`, `\"` for quotes) is exactly how result URLs get corrupted when decoded by hand, so use it for diagnostics only.
+- Discovery and other non-`generate` commands listed above accept only `--output text|json` (default: `text`). To inspect a model schema, run `mediaio model get <job_type>` or `mediaio model get <job_type> --output json`. If `model get` returns `invalid --output "full" (allowed: text, json)`, remove `--output full` or replace it with `--output json`; this is an unsupported output mode, not an authentication or outdated-build error.
+- For generation diagnostics, `mediaio generate create` and `mediaio generate query` support `--output full`, which prints the raw API payload. Its escaped JSON (`\u0026` for `&`, `\"` for quotes) is exactly how result URLs get corrupted when decoded by hand, so use it for diagnostics only.
 - `flag provided but not defined: -output` or `-download` means the installed BIN predates the brief-output contract. Fall back to reading the raw `data:` line, and still capture URLs with a shell variable rather than transcribing them.
 
 ## Job lifecycle
